@@ -14,11 +14,14 @@
     "@emotion/styled": "^11.13.5",
     "@mui/icons-material": "^6.1.8",
     "@mui/material": "^6.1.8",
+    "@mui/x-date-pickers": "^7.22.3",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
     "hotel_management_fe": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.0.1"
+    "react-router-dom": "^7.0.1",
+    "react-to-print": "^3.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

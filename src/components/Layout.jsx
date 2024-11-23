@@ -43,6 +43,7 @@ const Layout = () => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+    { text: 'Bookings', icon: <ReceiptIcon />, path: '/booking' },
     { text: 'Rooms', icon: <HotelIcon />, path: '/rooms' },
     { text: 'Guests', icon: <PeopleIcon />, path: '/guests' },
     { text: 'Billing', icon: <ReceiptIcon />, path: '/billing' },

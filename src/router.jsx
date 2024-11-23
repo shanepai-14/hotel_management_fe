@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from './pages/Dashboard';
 import RoomManagement from './pages/RoomManagement';
 import GuestManagement from './pages/GuestManagement';
+import BookingManagement from './pages/BookingManagement';
 import Billing from './pages/Billing';
 import Layout from './components/Layout';
 import ErrorPage from './pages/ErrorPage';
@@ -36,19 +37,17 @@ const router = createBrowserRouter([
           },
           {
             path: 'rooms',
-            children: [
-              { index: true, element: <RoomManagement /> },
-              { path: ':id', element: <RoomManagement /> },
-              { path: 'create', element: <RoomManagement /> }
-            ]
+             element: <RoomManagement />,
           },
           {
             path: 'guests',
-            children: [
-              { index: true, element: <GuestManagement /> },
-              { path: ':id', element: <GuestManagement /> },
-              { path: 'create', element: <GuestManagement /> }
-            ]
+             element: <GuestManagement /> 
+
+          },
+          {
+            path: 'booking',
+             element: <BookingManagement /> 
+
           },
           {
             path: 'billing',

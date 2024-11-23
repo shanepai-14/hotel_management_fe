@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import {
     Box,
@@ -24,7 +25,7 @@ const AMENITIES = [
     'Room Service'
 ];
 
-const RoomForm = ({ room, onSubmit, onCancel }) => {
+const RoomForm = ({ room, onSubmit, onCancel , nextRoomNumber }) => {
     const [formData, setFormData] = useState({
         room_number: '',
         type: 'standard',
@@ -37,7 +38,15 @@ const RoomForm = ({ room, onSubmit, onCancel }) => {
 
     useEffect(() => {
         if (room) {
+            // If editing existing room
             setFormData(room);
+        } else {
+            // If creating new room, get the next room number
+        
+            setFormData(prev => ({
+                ...prev,
+                room_number: nextRoomNumber
+            }));
         }
     }, [room]);
 
@@ -57,7 +66,7 @@ const RoomForm = ({ room, onSubmit, onCancel }) => {
     return (
         <form onSubmit={handleSubmit}>
             <DialogTitle>
-                {room ? 'Edit Room' : 'Add New Room'}
+                {room ? 'Edit Room' : 'Add New Rooms'}
             </DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
@@ -67,8 +76,10 @@ const RoomForm = ({ room, onSubmit, onCancel }) => {
                         value={formData.room_number}
                         onChange={handleChange}
                         required
+                        helperText={!room ? "Room number is automatically generated" : ""}
                     />
 
+                    {/* Rest of the form fields remain the same */}
                     <TextField
                         name="type"
                         label="Room Type"

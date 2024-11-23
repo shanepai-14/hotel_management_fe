@@ -28,19 +28,21 @@ import {
     ViewModule as GridIcon,
 } from '@mui/icons-material';
 import { roomService } from '../../services/roomService.js';
-import RoomForm from '../../components/RoomForm.jsx';
-
+import RoomForm from './RoomForm.jsx';
+import RoomSkeleton from '../../components/RoomSkeleton.jsx';
 const RoomManagement = () => {
     const [rooms, setRooms] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [viewMode, setViewMode] = useState('table');
+    const [viewMode, setViewMode] = useState('card');
+    const [nextRoomNumber, setNextRoomNumber] = useState(null);
 
     const fetchRooms = async () => {
         try {
             const response = await roomService.getRooms();
             setRooms(response.data);
+            generateNextRoomNumber(response.data);
         } catch (error) {
             console.error('Error fetching rooms:', error);
         } finally {
@@ -51,6 +53,21 @@ const RoomManagement = () => {
     useEffect(() => {
         fetchRooms();
     }, []);
+
+    const generateNextRoomNumber = async (rooms) => {
+     
+            // Extract room numbers and convert them to numbers
+            const roomNumbers = rooms.map(room => parseInt(room.room_number));
+            
+            // Find the highest room number
+            const maxRoomNumber = Math.max(0, ...roomNumbers);
+            
+            // Generate next room number with leading zeros (3 digits)
+            const nextRoomNumber = String(maxRoomNumber + 1).padStart(3, '0');
+
+            setNextRoomNumber(nextRoomNumber);
+
+    };
 
     const handleAddRoom = () => {
         setSelectedRoom(null);
@@ -143,6 +160,10 @@ const RoomManagement = () => {
     );
 
     const CardView = () => (
+        <>
+        {loading ? (
+            <RoomSkeleton count={6} />
+        ) : (
         <Grid container spacing={3}>
             {rooms.map((room) => (
                 <Grid item xs={12} sm={6} md={4} key={room.id}>
@@ -180,6 +201,8 @@ const RoomManagement = () => {
                 </Grid>
             ))}
         </Grid>
+        )}
+       </>
     );
 
     return (
@@ -222,6 +245,7 @@ const RoomManagement = () => {
                     room={selectedRoom}
                     onSubmit={handleSubmit}
                     onCancel={() => setOpenDialog(false)}
+                    nextRoomNumber={nextRoomNumber}
                 />
             </Dialog>
         </Box>
